@@ -1,22 +1,24 @@
+// src/App.tsx
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
-
 import { useAuth, AuthProvider } from './auth';
 
 const queryClient = new QueryClient();
 
-// ← router をここで生成
 const router = createRouter({
   routeTree,
-  context: {
-    auth: undefined!, // This will be set after we wrap the app in an AuthProvider
-  },
+  context: undefined!,
 });
 
 function InnerApp() {
-  const auth = useAuth();
-  return <RouterProvider router={router} context={{ auth }} />;
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <div className="p-4">Loading auth...</div>;
+  }
+
+  return <RouterProvider router={router} context={{ auth: { user } }} />;
 }
 
 export default function App() {
