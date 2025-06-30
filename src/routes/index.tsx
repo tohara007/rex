@@ -1,6 +1,7 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { useAuth } from '../auth';
-import { Rooms } from '../components/Rooms';
+import { ChatRoomList } from '../components/ChatRoomList';
+import { useChatRooms } from '../hooks/useChatRooms';
 
 export const Route = createFileRoute('/')({
   beforeLoad: ({ context }) => {
@@ -13,11 +14,14 @@ export const Route = createFileRoute('/')({
 
 function RoomsPage() {
   const { user } = useAuth();
+  const { rooms, loading } = useChatRooms();
+
+  if (loading) return <p className="p-4">読み込み中...</p>;
 
   return (
     <div>
-      <h2 className="text-xl mb-4">ようこそ、{user?.email} さん</h2>
-      <Rooms />
+      <h2 className="text-xl mb-4">Here We Go, {user?.email}!</h2>
+      <ChatRoomList rooms={rooms} />
     </div>
   );
 }
