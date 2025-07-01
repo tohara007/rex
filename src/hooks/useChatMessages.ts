@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   onSnapshot,
   orderBy,
   query,
@@ -67,4 +69,13 @@ export const usePostChatMessage = (roomId: string, user: User | null) => {
   };
 
   return { postMessage };
+};
+
+export const useDeleteChatMessage = (roomId: string) => {
+  const deleteMessage = async (messageId: string) => {
+    const messageRef = doc(db, 'chatRooms', roomId, 'messages', messageId);
+    await deleteDoc(messageRef);
+  };
+
+  return { deleteMessage };
 };
