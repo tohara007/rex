@@ -21,13 +21,13 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-2 p-4">
       <input
-        className="input input-bordered w-full"
+        className="input w-full"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="メールアドレス"
       />
       <input
-        className="input input-bordered w-full"
+        className="input w-full"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
