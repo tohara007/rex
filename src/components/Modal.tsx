@@ -9,7 +9,9 @@ export const Modal = ({ onClose, onHandleConfirmDelete }: Props) => {
       <div className="modal-box">
         <h3 className="font-bold text-lg">確認</h3>
         <div className="p-4">
-          <p>削除したメッセージは全員から確認できなくなります。</p>
+          <p>
+            削除したメッセージはチャットの参加者全員から確認できなくなります。
+          </p>
           <p>メッセージを削除しますか？</p>
         </div>
         <div className="modal-action">

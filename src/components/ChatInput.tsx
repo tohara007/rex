@@ -18,12 +18,12 @@ export const ChatInput = ({ onSend }: Props) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-center gap-2 p-2 border-t"
+      className="flex items-center gap-2 p-2 border-t w-full"
     >
       <input
         type="text"
         placeholder="メッセージを入力"
-        className="input input-bordered w-full"
+        className="input w-full"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />

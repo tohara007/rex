@@ -1,19 +1,28 @@
+import { Link, useRouterState } from '@tanstack/react-router';
+
 type ChatRoom = {
   id: string;
   name: string;
 };
 
 export function ChatRoomList({ rooms }: { rooms: ChatRoom[] }) {
-  if (rooms.length === 0)
-    return <p className="p-4">参加可能なチャットルームがありません</p>;
+  const { location } = useRouterState();
 
   return (
-    <ul className="menu bg-base-100 rounded-box">
-      {rooms.map((room) => (
-        <li key={room.id}>
-          <a href={`/rooms/${room.id}`}>{room.name}</a>
-        </li>
-      ))}
+    <ul className="menu bg-base-100 rounded-box w-full">
+      {rooms.map((room) => {
+        const isActive = location.pathname === `/rooms/${room.id}`;
+        return (
+          <li key={room.id}>
+            <Link
+              to={`/rooms/${room.id}`}
+              className={isActive ? 'active font-bold' : ''}
+            >
+              #{room.name}
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 }
