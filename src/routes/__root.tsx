@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   createRootRoute,
   Link,
@@ -16,8 +17,8 @@ export const Route = createRootRoute({
 
 function Layout() {
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const { rooms, loading } = useChatRooms();
+  const { user, loading: userloading } = useAuth();
+  const { rooms, loading: roomsLoading } = useChatRooms();
   const { user: userProfile } = useGetUser(user?.uid ?? '');
 
   const handleLogout = async () => {
@@ -25,7 +26,14 @@ function Layout() {
     navigate({ to: '/login' });
   };
 
-  if (loading) return <p className="p-4">Now Loading...</p>;
+  /** ログインチェック */
+  useEffect(() => {
+    if (!user) {
+      navigate({ to: '/login' });
+    }
+  }, [user]);
+
+  if (userloading && roomsLoading) return <p className="p-4">Now Loading...</p>;
 
   return (
     <div className="flex h-screen w-screen">
