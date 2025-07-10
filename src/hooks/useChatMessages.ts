@@ -13,6 +13,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import type { User } from 'firebase/auth';
+import type { UserProfile } from '../hooks/useUsers';
 
 type ChatMessage = {
   id: string;
@@ -53,7 +54,11 @@ export const useGetChatMessages = (roomId: string) => {
   return messages;
 };
 
-export const usePostChatMessage = (roomId: string, user: User | null) => {
+export const usePostChatMessage = (
+  roomId: string,
+  user: User | null,
+  userProfile: UserProfile | null
+) => {
   const postMessage = async (text: string) => {
     if (!user) throw new Error('未ログインユーザーです');
 
@@ -62,7 +67,7 @@ export const usePostChatMessage = (roomId: string, user: User | null) => {
     await addDoc(messagesRef, {
       text,
       uid: user.uid,
-      displayName: user.displayName || '匿名ユーザー',
+      displayName: userProfile?.displayName || '匿名ユーザー',
       photoURL: user.photoURL || '',
       createdAt: serverTimestamp(),
     });
