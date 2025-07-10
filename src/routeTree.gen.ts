@@ -9,18 +9,36 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ManageRouteImport } from './routes/manage'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ChangePasswordRouteImport } from './routes/change-password'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SettingUidRouteImport } from './routes/setting/$uid'
 import { Route as RoomsIdRouteImport } from './routes/rooms/$id'
 
+const ManageRoute = ManageRouteImport.update({
+  id: '/manage',
+  path: '/manage',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChangePasswordRoute = ChangePasswordRouteImport.update({
+  id: '/change-password',
+  path: '/change-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingUidRoute = SettingUidRouteImport.update({
+  id: '/setting/$uid',
+  path: '/setting/$uid',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RoomsIdRoute = RoomsIdRouteImport.update({
@@ -31,36 +49,74 @@ const RoomsIdRoute = RoomsIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/change-password': typeof ChangePasswordRoute
   '/login': typeof LoginRoute
+  '/manage': typeof ManageRoute
   '/rooms/$id': typeof RoomsIdRoute
+  '/setting/$uid': typeof SettingUidRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/change-password': typeof ChangePasswordRoute
   '/login': typeof LoginRoute
+  '/manage': typeof ManageRoute
   '/rooms/$id': typeof RoomsIdRoute
+  '/setting/$uid': typeof SettingUidRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/change-password': typeof ChangePasswordRoute
   '/login': typeof LoginRoute
+  '/manage': typeof ManageRoute
   '/rooms/$id': typeof RoomsIdRoute
+  '/setting/$uid': typeof SettingUidRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/rooms/$id'
+  fullPaths:
+    | '/'
+    | '/change-password'
+    | '/login'
+    | '/manage'
+    | '/rooms/$id'
+    | '/setting/$uid'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/rooms/$id'
-  id: '__root__' | '/' | '/login' | '/rooms/$id'
+  to:
+    | '/'
+    | '/change-password'
+    | '/login'
+    | '/manage'
+    | '/rooms/$id'
+    | '/setting/$uid'
+  id:
+    | '__root__'
+    | '/'
+    | '/change-password'
+    | '/login'
+    | '/manage'
+    | '/rooms/$id'
+    | '/setting/$uid'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChangePasswordRoute: typeof ChangePasswordRoute
   LoginRoute: typeof LoginRoute
+  ManageRoute: typeof ManageRoute
   RoomsIdRoute: typeof RoomsIdRoute
+  SettingUidRoute: typeof SettingUidRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/manage': {
+      id: '/manage'
+      path: '/manage'
+      fullPath: '/manage'
+      preLoaderRoute: typeof ManageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -68,11 +124,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/change-password': {
+      id: '/change-password'
+      path: '/change-password'
+      fullPath: '/change-password'
+      preLoaderRoute: typeof ChangePasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/setting/$uid': {
+      id: '/setting/$uid'
+      path: '/setting/$uid'
+      fullPath: '/setting/$uid'
+      preLoaderRoute: typeof SettingUidRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/rooms/$id': {
@@ -87,8 +157,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChangePasswordRoute: ChangePasswordRoute,
   LoginRoute: LoginRoute,
+  ManageRoute: ManageRoute,
   RoomsIdRoute: RoomsIdRoute,
+  SettingUidRoute: SettingUidRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -9,6 +9,7 @@ import { ChatView } from '../../components/ChatView';
 import { ChatInput } from '../../components/ChatInput';
 import { Modal } from '../../components/Modal';
 import { useAuth } from '../../auth';
+import { useGetUser } from '../../hooks/useUsers';
 
 export const Route = createFileRoute('/rooms/$id')({
   component: ChatRoomPage,
@@ -17,8 +18,9 @@ export const Route = createFileRoute('/rooms/$id')({
 function ChatRoomPage() {
   const { user } = useAuth();
   const { id } = useParams({ strict: false }); // id = roomId
+  const { user: userProfile } = useGetUser(user?.uid);
   const messages = useGetChatMessages(id);
-  const { postMessage } = usePostChatMessage(id, user);
+  const { postMessage } = usePostChatMessage(id, user, userProfile);
   const { deleteMessage } = useDeleteChatMessage(id);
 
   /* 削除対象メッセージID管理 */
