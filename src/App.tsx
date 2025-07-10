@@ -10,6 +10,9 @@ const router = createRouter({
 });
 
 export default function App() {
+  if (import.meta.env.VITE_MAINTENANCE_MODE === 'true') {
+    return <div>現在メンテナンス中です</div>;
+  }
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
