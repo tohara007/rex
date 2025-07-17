@@ -8,8 +8,10 @@ import {
 } from 'firebase/auth';
 import { auth } from '../firebase';
 
-/** タブやブラウザを閉じると自動でログアウトする設定 */
-await setPersistence(auth, browserSessionPersistence);
+/** ログイン情報削除 */
+export async function initializeAuthPersistence() {
+  await setPersistence(auth, browserSessionPersistence);
+}
 
 /** ログイン */
 export function signIn(email: string, password: string) {
