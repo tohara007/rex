@@ -14,8 +14,9 @@ function SettingsPage() {
   const { user: userProfile, loading } = useGetUser(uid);
   const { updateUser } = useUpdateUser(uid);
 
-  if (user?.uid !== uid) return <div>権限がありません</div>;
-  if (loading || !userProfile) return <div>Loading...</div>;
+  if (user?.uid !== uid) return <div>編集権限がありません。</div>;
+
+  if (loading || !userProfile) return <div>Now Loading...</div>;
 
   return <SetUser user={userProfile} onUpdate={updateUser} />;
 }
