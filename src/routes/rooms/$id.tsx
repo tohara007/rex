@@ -41,7 +41,12 @@ function ChatRoomPage() {
     }
   };
 
-  if (loading) return <p className="p-4">Now Loading...</p>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen text-xl">
+        Now Loading...
+      </div>
+    );
 
   return (
     <div className="flex flex-col h-full w-full">

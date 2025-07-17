@@ -37,7 +37,11 @@ function Layout() {
   }, [user]);
 
   if (userloading && roomsLoading && userProfileLoading)
-    return <p className="p-4">Now Loading...</p>;
+    return (
+      <div className="flex justify-center items-center h-screen text-xl">
+        Now Loading...
+      </div>
+    );
 
   return (
     <div className="flex h-screen w-screen">

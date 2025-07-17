@@ -31,7 +31,11 @@ function ManagePage() {
   }, [loadingUserProfile, userProfile, navigate]);
 
   if (loadingUserProfile || loadingUserProfiles)
-    return <div>Now Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen text-xl">
+        Now Loading...
+      </div>
+    );
 
   if (userProfile?.role !== 'admin') return null;
 

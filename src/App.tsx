@@ -19,7 +19,11 @@ export default function App() {
   }, []);
 
   if (import.meta.env.VITE_MAINTENANCE_MODE === 'true') {
-    return <div>現在メンテナンス中です</div>;
+    return (
+      <div className="flex justify-center items-center w-screen h-screen text-xl font-bold">
+        現在メンテナンス中です
+      </div>
+    );
   }
   return (
     <AuthProvider>
