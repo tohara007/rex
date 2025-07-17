@@ -30,7 +30,8 @@ function ManagePage() {
     }
   }, [loadingUserProfile, userProfile, navigate]);
 
-  if (loadingUserProfile || loadingUserProfiles) return <div>Loading...</div>;
+  if (loadingUserProfile || loadingUserProfiles)
+    return <div>Now Loading...</div>;
 
   if (userProfile?.role !== 'admin') return null;
 

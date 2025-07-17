@@ -10,6 +10,7 @@ import { ChatInput } from '../../components/ChatInput';
 import { Modal } from '../../components/Modal';
 import { useAuth } from '../../auth';
 import { useGetUser } from '../../hooks/useUsers';
+import { useChatRoom } from '../../hooks/useChatRooms';
 
 export const Route = createFileRoute('/rooms/$id')({
   component: ChatRoomPage,
@@ -18,6 +19,7 @@ export const Route = createFileRoute('/rooms/$id')({
 function ChatRoomPage() {
   const { user } = useAuth();
   const { id } = useParams({ strict: false }); // id = roomId
+  const { room, loading } = useChatRoom(id);
   const { user: userProfile } = useGetUser(user?.uid);
   const messages = useGetChatMessages(id);
   const { postMessage } = usePostChatMessage(id, user, userProfile);
@@ -39,11 +41,14 @@ function ChatRoomPage() {
     }
   };
 
+  if (loading) return <p className="p-4">Now Loading...</p>;
+
   return (
     <div className="flex flex-col h-full w-full">
       {/* ルーム名タイトル */}
-      <div className="px-4 py-2 border-b bg-base-100 text-lg font-bold">
-        #{id}
+      <div className="px-4 py-2 border-b">
+        <div className="text-lg font-bold">#{room.name}</div>
+        <p>{room.description}</p>
       </div>
 
       {/* メッセージ一覧：スクロール可能 */}
