@@ -56,8 +56,8 @@ function Layout() {
               </p>
             </Link>
             {userProfile?.role === 'admin' && (
-              <Link to="/manage" className="btn btn-sm btn-outline mb-4">
-                ユーザー管理
+              <Link to="/manage" className="btn btn-sm btn-secondary mb-4">
+                🛠️ ユーザー管理
               </Link>
             )}
             {(userProfile?.role === 'admin' ||
