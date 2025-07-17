@@ -57,7 +57,7 @@ export const SetUser = ({ user, onUpdate }: Props) => {
           className="textarea w-full"
         />
       </div>
-      <div>
+      {/* <div>
         <label className="label">アイコン画像URL</label>
         <input
           type="text"
@@ -66,7 +66,7 @@ export const SetUser = ({ user, onUpdate }: Props) => {
           onChange={handleChange}
           className="input w-full"
         />
-      </div>
+      </div> */}
       <button type="submit" className="btn btn-primary w-full">
         更新
       </button>

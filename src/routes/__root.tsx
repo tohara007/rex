@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   createRootRoute,
   Link,
   Outlet,
   useNavigate,
 } from '@tanstack/react-router';
-// import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { logout, useAuth } from '../auth';
 import { ChatRoomList } from '../components/ChatRoomList';
 import { useChatRooms } from '../hooks/useChatRooms';
 import { useGetUser } from '../hooks/useUsers';
+import { CreateRoomModal } from '../components/CreateChatRoomModal';
 
 export const Route = createRootRoute({
   component: Layout,
@@ -19,7 +19,10 @@ function Layout() {
   const navigate = useNavigate();
   const { user, loading: userloading } = useAuth();
   const { rooms, loading: roomsLoading } = useChatRooms();
-  const { user: userProfile } = useGetUser(user?.uid ?? '');
+  const { user: userProfile, loading: userProfileLoading } = useGetUser(
+    user?.uid ?? ''
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleLogout = async () => {
     await logout();
@@ -33,7 +36,8 @@ function Layout() {
     }
   }, [user]);
 
-  if (userloading && roomsLoading) return <p className="p-4">Now Loading...</p>;
+  if (userloading && roomsLoading && userProfileLoading)
+    return <p className="p-4">Now Loading...</p>;
 
   return (
     <div className="flex h-screen w-screen">
@@ -56,6 +60,15 @@ function Layout() {
                 ユーザー管理
               </Link>
             )}
+            {(userProfile?.role === 'admin' ||
+              userProfile?.role === 'user') && (
+              <button
+                className="btn btn-sm btn-primary mb-4"
+                onClick={() => setIsModalOpen(true)}
+              >
+                ＋ ルーム作成
+              </button>
+            )}
             <ChatRoomList rooms={rooms} />
             <button
               className="btn btn-sm btn-outline mt-auto"
@@ -71,6 +84,15 @@ function Layout() {
       <main className="flex-1 flex flex-col">
         <Outlet />
       </main>
+
+      {/* チャットルーム作成モーダル */}
+      {isModalOpen && userProfile && (
+        <CreateRoomModal
+          user={userProfile}
+          navigate={navigate}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

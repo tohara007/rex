@@ -57,7 +57,8 @@ export const useGetUser = (uid: string | undefined) => {
       const docRef = doc(db, 'users', uid);
       const snap = await getDoc(docRef);
       if (snap.exists()) {
-        setUser(snap.data() as UserProfile);
+        const data = snap.data();
+        setUser({ ...data, id: docRef.id } as UserProfile);
       }
       setLoading(false);
     };
