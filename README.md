@@ -1,54 +1,50 @@
-# React + TypeScript + Vite
+# 招待制チャットアプリ
+## 技術スタック
+### 基本構成
+- React + TypeScript + Vite + Tailwind CSS
+### ルーティング
+- tanstack-router
+### 認証
+- Firebase Authentication
+### DB
+- Firestore Database
+### UIライブラリ
+- Daisy UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 環境構築
+### Firebase準備
+1. Googleアカウントを用意
+2. Firebase コンソールにアクセス
+  • https://console.firebase.google.com
+	•「プロジェクトを追加」をクリック
+	•	任意のプロジェクト名を入力（例: chat-app-dev）
+	•	Google アナリティクス → 「無効にする」でOK
+	•	「プロジェクトを作成」を押す
+3. Firebase プロジェクト内でサービスを有効化
+  【認証（Authentication）】
+	  •	左メニュー「Authentication」 → 「始める」
+	  •	サインイン方法 → 「Email/Password」を有効化
+  【Firestore（データベース）】
+	  •	左メニュー「Firestore Database」 → 「データベースの作成」
+	  •	モード：テストモード（開発中はこれでOK）
+	  •	リージョンは近い場所を選択（例：asia-northeast1）
+4. Firebase Webアプリを登録
+	•	プロジェクト設定（歯車アイコン）→「全般」→「アプリを追加」→「</>（Web）」を選ぶ
+	•	アプリ名は chat-web など任意でOK
+	•	「Hosting の設定」は スキップしてOK
+	•	最後に出てくる設定スニペットをメモ（下記のような構成）
+  ```
+  apiKey: 'xxxxx',
+  authDomain: 'xxxxx.firebaseapp.com',
+  projectId: 'xxxxx',
+  storageBucket: 'xxxxx.appspot.com',
+  messagingSenderId: 'xxxxx',
+  appId: 'xxxxx',
+  ```
 
-Currently, two official plugins are available:
+### アプリ起動
+1. `.envsample`をコピーして`.env`を作成し、「Firebase準備-4」で取得した内容をそれぞれの項目へ記載する。
+2. `npm install` で必要な依存関係をインストールする。
+3. `npm run dev` でアプリ起動する。
+4. http://localhost:5173/ へアクセスする。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
